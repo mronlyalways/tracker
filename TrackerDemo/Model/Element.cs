@@ -1,18 +1,19 @@
-﻿
+﻿using System;
+
 namespace TrackerDemo.Model
 {
-    class Element
+    public class Element
     {
-        public double Value
+        public Element() { }
+
+        public Element(double value, DateTime date)
         {
-            get;
-            set;
+            Value = value;
+            Date = date;
         }
 
-        public Category Category
-        {
-            get;
-            set;
-        }
+        public double Value { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

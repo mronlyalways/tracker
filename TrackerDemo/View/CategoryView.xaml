@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="TrackerDemo.View.CategoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Width="600" Height="364">
+    <Grid Background="White">
+    	<Grid.RowDefinitions>
+    		<RowDefinition/>
+    		<RowDefinition/>
+    	</Grid.RowDefinitions>
+    	<WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+    		<Button Content="Back" Margin="0,0,5,0" Command="{Binding OpenParentViewCommand}"/>
+    		<Label Content="{Binding Category.Name}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    	</WrapPanel>
+    	<WrapPanel HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    			<Grid.RowDefinitions>
+    				<RowDefinition/>
+    				<RowDefinition Height="3*"/>
+    			</Grid.RowDefinitions>
+    			<Label Content="Goal" VerticalAlignment="Top" Background="Red" Height="25.96" Grid.RowSpan="2"/>
+    			<TextBox Text="{Binding Goal}" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right" Height="21.96" Width="16.47"/>
+    		</Grid>
+    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    			<Grid.RowDefinitions>
+    				<RowDefinition/>
+    				<RowDefinition Height="3*"/>
+    			</Grid.RowDefinitions>
+    			<Label Content="Avg" VerticalAlignment="Top" Background="Red"/>
+    			<Label Content="{Binding Avg}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
+    		</Grid>
+    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    			<Grid.RowDefinitions>
+    				<RowDefinition/>
+    				<RowDefinition Height="3*"/>
+    			</Grid.RowDefinitions>
+    			<Label Content="Min" VerticalAlignment="Top" Background="Red"/>
+    			<Label Content="{Binding Min}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
+    		</Grid>
+    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    			<Grid.RowDefinitions>
+    				<RowDefinition/>
+    				<RowDefinition Height="3*"/>
+    			</Grid.RowDefinitions>
+    			<Label Content="Max" VerticalAlignment="Top" Background="Red"/>
+    			<Label Content="{Binding Max}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
+    		</Grid>
+    	</WrapPanel>
+        <Button Content="New Element" Command="{Binding CreateNewElementCommand}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom"/>
+            
+    </Grid>
+</UserControl>

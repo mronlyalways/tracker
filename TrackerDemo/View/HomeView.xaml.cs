@@ -1,17 +1,16 @@
-﻿using System.Windows;
-using TrackerDemo.ViewModel;
+﻿using System.Windows.Controls;
 
-namespace TrackerDemo
+namespace TrackerDemo.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class HomeView : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
-        public MainWindow()
+        public HomeView()
         {
             InitializeComponent();
             //Closing += (s, e) => ResourceLocator.Cleanup();

@@ -2,24 +2,23 @@
 
 namespace TrackerDemo.Model
 {
-    class Category
+    public class Category
     {
-        public string Name
+        public Category()
         {
-            get;
-            set;
+            Elements = new List<Element>();
         }
 
-        public string Unit
+        public Category(string name, string unit) : this()
         {
-            get;
-            set;
+            Name = name;
+            Unit = unit;
         }
 
-        public IList<Element> Elements
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
+
+        public string Unit { get; set; }
+
+        public IList<Element> Elements { get; set; }
     }
 }

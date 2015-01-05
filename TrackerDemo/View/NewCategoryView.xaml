@@ -1,0 +1,28 @@
+﻿<Window x:Class="TrackerDemo.View.NewCategoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        DataContext="{Binding NewCategory, Source={StaticResource Locator}}"
+        Title="New Category" Height="300" Width="300" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        	<Grid.RowDefinitions>
+        		<RowDefinition/>
+        		<RowDefinition/>
+        		<RowDefinition/>
+        		<RowDefinition/>
+        	</Grid.RowDefinitions>
+        	<Label Content="Unit" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667"/>
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        	<Label Content="Name" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Grid.Row="2" FontSize="18.667"/>
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="3" Text="{Binding Path=Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button IsDefault="True" Command="{Binding CreateNewCategoryCommand}" Content="OK" Margin="10,10,5,10" Padding="5,1"/>
+            <Button IsCancel="True" Content="Cancel" Margin="5,10,10,10"/>
+        </StackPanel>
+    </Grid>
+</Window>

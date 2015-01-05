@@ -1,16 +1,23 @@
-﻿<Application x:Class="TrackerDemo.App"
+﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:t="clr-namespace:TrackerDemo"
+             xmlns:v="clr-namespace:TrackerDemo.View"
              xmlns:vm="clr-namespace:TrackerDemo.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             StartupUri="View/MainWindow.xaml"
+             x:Class="TrackerDemo.App"
+             StartupUri="View/ChromeView.xaml"
              mc:Ignorable="d">
-    
+
     <Application.Resources>
-        <t:ResourceLocator x:Key="Locator"
-                             d:IsDataSource="True" />
+    	<t:ResourceLocator x:Key="Locator"
+    		d:IsDataSource="True" />
+    	<DataTemplate DataType="{x:Type vm:HomeViewModel}">
+    		<v:HomeView/>
+    	</DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CategoryViewModel}">
+            <v:CategoryView/>
+        </DataTemplate>
     </Application.Resources>
-    
 </Application>
