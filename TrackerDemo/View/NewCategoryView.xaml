@@ -3,13 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         DataContext="{Binding NewCategory, Source={StaticResource Locator}}"
         Title="New Category" Height="300" Width="300" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type SolidColorBrush}">
+            <Label Background="{Binding}" Height="20" Width="20"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid VerticalAlignment="Center" Margin="0" HorizontalAlignment="Center">
         	<Grid.RowDefinitions>
+        		<RowDefinition/>
+        		<RowDefinition/>
         		<RowDefinition/>
         		<RowDefinition/>
         		<RowDefinition/>
@@ -17,10 +24,19 @@
         	</Grid.RowDefinitions>
         	<Label Content="Unit" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667"/>
             <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-        	<Label Content="Name" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Grid.Row="2" FontSize="18.667"/>
+        	<Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" FontSize="18.667"/>
             <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="3" Text="{Binding Path=Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+			<Label Content="Color" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" FontSize="18.667"/>
+            <ListBox Grid.Row="5" ItemsSource="{Binding ColorPalette}" SelectedItem="{Binding SelectedColor, Mode=TwoWay}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <Button IsDefault="True" Command="{Binding CreateNewCategoryCommand}" Content="OK" Margin="10,10,5,10" Padding="5,1"/>
             <Button IsCancel="True" Content="Cancel" Margin="5,10,10,10"/>
         </StackPanel>

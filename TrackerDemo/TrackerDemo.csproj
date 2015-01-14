@@ -46,6 +46,7 @@
     <Reference Include="GalaSoft.MvvmLight.Platform">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -76,6 +77,7 @@
     <Compile Include="Message\CloseWindowMessage.cs" />
     <Compile Include="Message\NewElementMessage.cs" />
     <Compile Include="Message\NewCategoryMessage.cs" />
+    <Compile Include="Message\NotificationMessage.cs" />
     <Compile Include="Message\RequestNewElementMessage.cs" />
     <Compile Include="Message\RequestNewCategoryMessage.cs" />
     <Compile Include="Model\Category.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="ResourceLocator.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChromeViewModel.cs" />
+    <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\NewElementViewModel.cs" />
     <Compile Include="ViewModel\NewCategoryViewModel.cs" />
@@ -94,6 +97,11 @@
     </Compile>
     <Compile Include="View\NewCategoryView.xaml.cs">
       <DependentUpon>NewCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NotificationTypeToColorConverter.cs" />
+    <Compile Include="View\NotificationTypeToSymbolConverter.cs" />
+    <Compile Include="View\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\CategoryView.xaml">
       <SubType>Designer</SubType>
@@ -123,6 +131,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\NewCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NotificationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,12 +168,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <DesignData Include="SampleData\HomeViewModelSampleData.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="SampleData\SampleDataSource\" />
   </ItemGroup>
+  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\seguisym.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
+    <Resource Include="Resources\img\left-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\NotificationViewModelSampleData.xaml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

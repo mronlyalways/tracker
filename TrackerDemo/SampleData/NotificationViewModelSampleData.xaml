@@ -1,0 +1,1 @@
+﻿<ViewModel:NotificationViewModel xmlns:ViewModel="clr-namespace:TrackerDemo.ViewModel" IsInDesignMode="True" IsInDesignModeStatic="False" NotificationMessage="Maecenas aenean nam aliquam" NotificationType="Sync"/>

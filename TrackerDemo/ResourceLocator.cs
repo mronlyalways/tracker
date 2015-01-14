@@ -22,6 +22,7 @@ namespace TrackerDemo
             kernel.Bind<HomeViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<NewCategoryViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<NewElementViewModel>().ToSelf().InSingletonScope();
+            kernel.Bind<NotificationViewModel>().ToSelf().InSingletonScope();
 
             // add other things here:
             kernel.Bind<IDataService>().To<TestDataService>().InSingletonScope();
@@ -61,6 +62,14 @@ namespace TrackerDemo
             get
             {
                 return kernel.Get<NewElementViewModel>();
+            }
+        }
+
+        public NotificationViewModel Notification
+        {
+            get
+            {
+                return kernel.Get<NotificationViewModel>();
             }
         }
 

@@ -10,8 +10,8 @@
         xmlns:vm="clr-namespace:TrackerDemo.ViewModel"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        DataContext="{Binding Home, Mode=OneWay, Source={StaticResource Locator}}"
-        d:DataContext="{d:DesignData /SampleData/HomeViewModelSampleData.xaml}">
+		FontSize="26"
+        DataContext="{Binding Home, Mode=OneWay, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type m:Category}">
             <Grid Width="200" Height="200">
@@ -19,30 +19,34 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Margin="5" Text="{Binding Name}" FontSize="26" TextTrimming="CharacterEllipsis" Foreground="White" Background="Black"/>
+                <TextBlock Margin="5" Text="{Binding Name}" TextTrimming="CharacterEllipsis" Foreground="White" Background="{Binding Color}"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
     	<Grid.RowDefinitions>
+    		<RowDefinition Height="40"/>
     		<RowDefinition/>
-    		<RowDefinition Height="10*"/>
     	</Grid.RowDefinitions>
-    	<WrapPanel>
-    		<Label Content="Tracker"/>
-            <Button Command="{Binding NewCategoryCommand}" Content="New category"/>
-        </WrapPanel>
-        <ListBox Name="listBox" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonUp" SourceName="listBox">
-                    <Custom:EventToCommand Command="{Binding OpenCategoryCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
+    		<Grid>
+    			<Grid.ColumnDefinitions>
+    				<ColumnDefinition Width="1*"/>
+    				<ColumnDefinition Width="1*"/>
+    			</Grid.ColumnDefinitions>
+    			<Label Content="Tracker" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold"/>
+    			<Button Command="{Binding NewCategoryCommand}" Content="New category" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16"/>
+    		</Grid>
+    	<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+    		<ListBox.ItemsPanel>
+    			<ItemsPanelTemplate>
+    				<WrapPanel IsItemsHost="True" />
+    			</ItemsPanelTemplate>
+    		</ListBox.ItemsPanel>
+    		<i:Interaction.Triggers>
+    			<i:EventTrigger EventName="MouseLeftButtonUp" SourceName="listBox">
+    				<Custom:EventToCommand Command="{Binding OpenCategoryCommand}"/>
+    			</i:EventTrigger>
+    		</i:Interaction.Triggers>
+    	</ListBox>
     </Grid>
 </UserControl>

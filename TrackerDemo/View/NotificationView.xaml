@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="TrackerDemo.View.NotificationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ia="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:v="clr-namespace:TrackerDemo.View"
+             mc:Ignorable="d" d:DataContext="{d:DesignData /SampleData/NotificationViewModelSampleData.xaml}"
+			 FontSize="18">
+    <UserControl.Resources>
+        <v:NotificationTypeToSymbolConverter x:Key="NotificationTypeToSymbolConverter"/>
+        <v:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter"/>
+        <Storyboard x:Key="FadeInFadeOut">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="NotificationArea" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:2.0" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+    	<Binding Mode="OneWay" Path="Notification" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
+    <Border x:Name="NotificationArea" Opacity="0.0" Width="Auto" Height="Auto" BorderThickness="2" CornerRadius="0,0,5,5">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="White" Opacity="0.65"/>
+        </Border.BorderBrush>
+        <i:Interaction.Triggers>
+            <ia:DataStoreChangedTrigger Binding="{Binding NotificationMessage}">
+                <ia:ControlStoryboardAction Storyboard="{StaticResource FadeInFadeOut}"/>
+            </ia:DataStoreChangedTrigger>
+        </i:Interaction.Triggers>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.Background>
+                <SolidColorBrush Color="White" Opacity="0.65"/>
+            </StackPanel.Background>
+            <Label Content="{Binding NotificationMessage}" Margin="10,5,4,5"/>
+            <Label Content="{Binding NotificationType, Converter={StaticResource NotificationTypeToSymbolConverter}}" Foreground="{Binding NotificationType, Converter={StaticResource NotificationTypeToColorConverter}}"  Margin="4,5,10,0"/>
+        </StackPanel>
+    </Border>
+</UserControl>

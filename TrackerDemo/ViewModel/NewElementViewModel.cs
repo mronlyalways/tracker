@@ -53,6 +53,7 @@ namespace TrackerDemo.ViewModel
         private void CreateNewElement()
         {
             Messenger.Default.Send<NewElementMessage>(new NewElementMessage(new Element(Convert.ToDouble(Value), Date)));
+            Messenger.Default.Send<TrackerDemo.Message.NotificationMessage>(new TrackerDemo.Message.NotificationMessage("New element created", Message.NotificationMessage.NotificationType.Success));
             Messenger.Default.Send<CloseWindowMessage>(new CloseWindowMessage());
         }
 
