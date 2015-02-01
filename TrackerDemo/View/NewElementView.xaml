@@ -1,8 +1,11 @@
-﻿<Window x:Class="TrackerDemo.View.NewElementView"
+﻿<UserControl x:Class="TrackerDemo.View.NewElementView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        DataContext="{Binding NewElement, Source={StaticResource Locator}}"
-        Title="New Element" Height="300" Width="300" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        xmlns:vm="clr-namespace:TrackerDemo.ViewModel"
+        Height="300" Width="300">
+    <UserControl.DataContext>
+        <vm:NewElementViewModel />
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -16,13 +19,13 @@
         		<RowDefinition/>
         	</Grid.RowDefinitions>
         	<Label Content="Value" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18.667"/>
-            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
         	<Label Content="Date" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Grid.Row="2" FontSize="18.667"/>
-            <DatePicker VerticalAlignment="Top" Grid.Row="3" SelectedDate="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <DatePicker VerticalAlignment="Top" Grid.Row="3" SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <Button IsDefault="True" Command="{Binding CreateNewElementCommand}" Content="OK" Margin="10,10,5,10" Padding="5,1"/>
             <Button IsCancel="True" Content="Cancel" Margin="5,10,10,10"/>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

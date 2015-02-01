@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,21 +12,68 @@ using TrackerDemo.Model;
 
 namespace TrackerDemo.ViewModel
 {
-    public class NewCategoryViewModel : ViewModelBase, IDataErrorInfo
+    public class NewCategoryViewModel : ViewModelBase, IInteractionRequestAware, IDataErrorInfo
     {
         public NewCategoryViewModel()
         {
             CreateNewCategoryCommand = new RelayCommand(CreateNewCategory, IsValid);
             Name = String.Empty;
             Unit = String.Empty;
-            SelectedColor = new SolidColorBrush(Colors.Blue);
             ColorPalette = new ObservableCollection<SolidColorBrush>();
+            SelectedColor = new SolidColorBrush(Colors.Blue);
             ColorPalette.Add(SelectedColor);
             ColorPalette.Add(new SolidColorBrush(Colors.Orange));
             ColorPalette.Add(new SolidColorBrush(Colors.Purple));
             ColorPalette.Add(new SolidColorBrush(Colors.Green));
             ColorPalette.Add(new SolidColorBrush(Colors.Red));
             ColorPalette.Add(new SolidColorBrush(Colors.Gray));
+        }
+
+        private Action finish;
+        public Action FinishInteraction
+        {
+            get
+            {
+                return finish;
+            }
+            set
+            {
+                finish = value;
+            }
+        }
+
+        public INotification Notification
+        {
+            get
+            {
+                return TypedNotification;
+            }
+            set
+            {
+                if (value is ResultNotification<Category>)
+                {
+                    TypedNotification = value as ResultNotification<Category>;
+                }
+            }
+        }
+
+        private ResultNotification<Category> typedNotification;
+        public ResultNotification<Category> TypedNotification
+        {
+            get
+            {
+                return typedNotification;
+            }
+            set
+            {
+                typedNotification = value;
+                if (typedNotification.Result != null)
+                {
+                    Name = typedNotification.Result.Name;
+                    Unit = typedNotification.Result.Unit;
+                    SelectedColor = typedNotification.Result.Color;
+                }
+            }
         }
 
         private string name;
@@ -91,11 +139,16 @@ namespace TrackerDemo.ViewModel
 
         private void CreateNewCategory()
         {
-            Messenger.Default.Send<NewCategoryMessage>(new NewCategoryMessage(new Category(Name, Unit, SelectedColor)));
-            Messenger.Default.Send<TrackerDemo.Message.NotificationMessage>(new TrackerDemo.Message.NotificationMessage("New category created", Message.NotificationMessage.NotificationType.Success));
-            Messenger.Default.Send<CloseWindowMessage>(new CloseWindowMessage());
-            Name = String.Empty;
-            Unit = String.Empty;
+            if (TypedNotification.Result == null)
+            {
+                TypedNotification.Result = new Category();
+            }
+
+            TypedNotification.Result.Name = Name;
+            TypedNotification.Result.Unit = Unit;
+            TypedNotification.Result.Color = SelectedColor;
+
+            FinishInteraction();
         }
 
         private bool IsValid()

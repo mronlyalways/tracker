@@ -8,22 +8,42 @@
         xmlns:m="clr-namespace:TrackerDemo.Model"
         xmlns:v="clr-namespace:TrackerDemo.View"
         xmlns:vm="clr-namespace:TrackerDemo.ViewModel"
+        xmlns:prism="http://www.codeplex.com/prism"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-		FontSize="26"
         DataContext="{Binding Home, Mode=OneWay, Source={StaticResource Locator}}">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type m:Category}">
-            <Grid Width="200" Height="200">
+        <DataTemplate DataType="{x:Type vm:CategoryViewModel}">
+            <Grid Width="200" Height="200" Background="{Binding Category.Color}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Margin="5" Text="{Binding Name}" TextTrimming="CharacterEllipsis" Foreground="White" Background="{Binding Color}"/>
+                <TextBlock Margin="5" Text="{Binding Category.Name}" TextTrimming="CharacterEllipsis" Foreground="White" />
+				<Button Grid.Row="1" Content="+" Command="{Binding ElementName=root, Path=DataContext.RaiseNewElementCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding NewCategoryRequest, Mode=OneWay}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <v:NewCategoryView />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding NewElementRequest, Mode=OneWay}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <v:NewElementView />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid x:Name="root">
     	<Grid.RowDefinitions>
     		<RowDefinition Height="40"/>
     		<RowDefinition/>
@@ -34,7 +54,7 @@
     				<ColumnDefinition Width="1*"/>
     			</Grid.ColumnDefinitions>
     			<Label Content="Tracker" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold"/>
-    			<Button Command="{Binding NewCategoryCommand}" Content="New category" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16"/>
+    			<Button Command="{Binding RaiseNewCategoryCommand}" Content="New category" Margin="10,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16"/>
     		</Grid>
     	<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     		<ListBox.ItemsPanel>

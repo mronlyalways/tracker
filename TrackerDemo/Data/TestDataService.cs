@@ -15,8 +15,8 @@ namespace TrackerDemo.Data
         public TestDataService()
         {
             categories = new List<Category>();
-            var c1 = new Category("Weight", "kg", new SolidColorBrush(Colors.AliceBlue));
-            var c2 = new Category("Pushups", "reps", new SolidColorBrush(Colors.LightSeaGreen));
+            var c1 = new Category("Weight", "kg", 0, new SolidColorBrush(Colors.AliceBlue));
+            var c2 = new Category("Pushups", "reps", 0, new SolidColorBrush(Colors.LightSeaGreen));
             var e1 = new Element(78, DateTime.Now);
             var e2 = new Element(79, DateTime.Now);
             var e3 = new Element(10, DateTime.Now);

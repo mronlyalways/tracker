@@ -1,14 +1,17 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using TrackerDemo.Message;
 using TrackerDemo.Model;
+using TrackerDemo.View;
 
 namespace TrackerDemo.ViewModel
 {
@@ -20,54 +23,44 @@ namespace TrackerDemo.ViewModel
         public CategoryViewModel(Category category, ViewModelBase parent)
         {
             Category = category;
-            locator = (ResourceLocator)App.Current.Resources["Locator"];
             this.parent = parent;
+            locator = (ResourceLocator)App.Current.Resources["Locator"];
 
             Elements = new ObservableCollection<Element>(Category.Elements);
-            CreateNewElementCommand = new RelayCommand(CreateNewElement, () => true);
             OpenParentViewCommand = new RelayCommand(OpenParentView, () => true);
-
-            Messenger.Default.Register<NewElementMessage>(this, OnNewElementCreated);
+            RaiseNewElementCommand = new RelayCommand(RaiseNewElement, () => true);
+            RaiseEditElementCommand = new RelayCommand(RaiseEditElement, () => true);
+            DeleteElementCommand = new RelayCommand(DeleteElement, () => true);
+            NewElementRequest = new InteractionRequest<ResultNotification<Element>>();
         }
 
-        private Category category;
-        public Category Category
+        public Category Category { get; private set; }
+
+        public ObservableCollection<Element> Elements { get; private set; }
+
+        private Element selected;
+        public Element Selected
         {
             get
             {
-                return category;
+                return selected;
             }
             set
             {
-                category = value;
-                RaisePropertyChanged(() => Category);
+                selected = value;
+                RaisePropertyChanged(() => Selected);
             }
         }
 
-        private ObservableCollection<Element> elements;
-        public ObservableCollection<Element> Elements
-        {
-            get
-            {
-                return elements;
-            }
-            set
-            {
-                elements = value;
-                RaisePropertyChanged(() => Elements);
-            }
-        }
-
-        private double goal;
         public double Goal
         {
             get
             {
-                return goal;
+                return Category.Goal;
             }
             set
             {
-                goal = value;
+                Category.Goal = value;
                 RaisePropertyChanged(() => Goal);
             }
         }
@@ -96,32 +89,55 @@ namespace TrackerDemo.ViewModel
             }
         }
 
-        public RelayCommand CreateNewElementCommand
-        {
-            get;
-            private set;
-        }
+        public RelayCommand OpenParentViewCommand { get; private set; }
 
-        public RelayCommand OpenParentViewCommand
-        {
-            get;
-            private set;
-        }
+        public RelayCommand RaiseNewElementCommand { get; private set; }
 
-        private void CreateNewElement()
-        {
-            Messenger.Default.Send(new RequestNewElementMessage());
-        }
+        public RelayCommand RaiseEditElementCommand { get; private set; }
+
+        public RelayCommand DeleteElementCommand { get; private set; }
+
+        public InteractionRequest<ResultNotification<Element>> NewElementRequest { get; private set; }
 
         private void OpenParentView()
         {
             locator.Chrome.Current = parent;
         }
 
-        private void OnNewElementCreated(NewElementMessage m)
+        private void RaiseNewElement()
         {
-            Category.Elements.Add(m.Element);
-            Elements.Add(m.Element);
+            ResultNotification<Element> notification = new ResultNotification<Element>() { Title = "New Element" };
+            NewElementRequest.Raise(notification,
+                returned =>
+                {
+                    Elements.Add(returned.Result);
+                    Category.Elements.Add(returned.Result);
+                    RaisePropertyChanged(() => Avg);
+                    RaisePropertyChanged(() => Min);
+                    RaisePropertyChanged(() => Max);
+                });
+        }
+
+        private void RaiseEditElement()
+        {
+            ResultNotification<Element> notification = new ResultNotification<Element>() { Title = "Edit Element" };
+            var tmp = Selected; // keep reference to selected item
+            notification.Result = tmp;
+            NewElementRequest.Raise(notification,
+                returned =>
+                {
+                    tmp.Value = returned.Result.Value;
+                    tmp.Date = returned.Result.Date;
+                    RaisePropertyChanged(() => Avg);
+                    RaisePropertyChanged(() => Min);
+                    RaisePropertyChanged(() => Max);
+                });
+        }
+
+        private void DeleteElement()
+        {
+            Category.Elements.Remove(Selected);
+            Elements.Remove(Selected);
             RaisePropertyChanged(() => Avg);
             RaisePropertyChanged(() => Min);
             RaisePropertyChanged(() => Max);

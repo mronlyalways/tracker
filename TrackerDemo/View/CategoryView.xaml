@@ -3,62 +3,103 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:m="clr-namespace:TrackerDemo.Model"
+             xmlns:v="clr-namespace:TrackerDemo.View"
+			 FontSize="26"
              mc:Ignorable="d">
-    <Grid Background="White">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type m:Element}">
+            <Grid Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="5" Text="{Binding Value}" Foreground="White" />
+                <Button Grid.Column="1" Content="Edit" Command="{Binding ElementName=root, Path=DataContext.RaiseEditElementCommand}" />
+                <Button Grid.Column="2" Content="Delete" Command="{Binding ElementName=root, Path=DataContext.DeleteElementCommand}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding NewElementRequest, Mode=OneWay}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <v:NewElementView/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid x:Name="root" Background="White">
     	<Grid.RowDefinitions>
     		<RowDefinition Height="40"/>
     		<RowDefinition/>
     		<RowDefinition/>
     	</Grid.RowDefinitions>
-		<Grid>
-			<Grid.ColumnDefinitions>
-    			<ColumnDefinition Width="Auto"/>
-    			<ColumnDefinition Width="Auto"/>
-    			<ColumnDefinition/>
-    		</Grid.ColumnDefinitions>
-    			<Button Command="{Binding OpenParentViewCommand}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
-    				<Image Height="20" Width="20" Source="/TrackerDemo;component/Resources/img/left-arrow.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center" />
-				</Button>
-    			<Label Content="{Binding Category.Name}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,0"/>
-			<Button Content="New Element" Command="{Binding CreateNewElementCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Column="2"/>
-		</Grid>
-        <Canvas HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="600" Grid.Row="1"/>
-    	<WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Margin="0,0,0,5">
-    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding OpenParentViewCommand}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
+                <Image Height="20" Width="20" Source="/TrackerDemo;component/Resources/img/left-arrow.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            </Button>
+            <Label Content="{Binding Category.Name}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,0"/>
+            <Button Content="New Element" Command="{Binding RaiseNewElementCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Column="2"/>
+        </Grid>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Elements}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="IsSelected" Value="True"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Margin="0,0,0,5">
+    		<Grid Height="300" Margin="5" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
     			<Grid.RowDefinitions>
     				<RowDefinition/>
     				<RowDefinition Height="3*"/>
     			</Grid.RowDefinitions>
-                <Label Content="Goal" VerticalAlignment="Top" Background="{Binding Category.Color}" Height="25.96" Grid.RowSpan="2"/>
-    			<TextBox Text="{Binding Goal}" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
-    			<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
+                <Label Content="Goal" VerticalAlignment="Top" Background="{Binding Category.Color}" Grid.RowSpan="2"/>
+    			<TextBox Text="{Binding Category.Goal}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
+    			<Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"/>
     		</Grid>
-    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    		<Grid Height="300" Margin="5" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
     			<Grid.RowDefinitions>
     				<RowDefinition/>
     				<RowDefinition Height="3*"/>
     			</Grid.RowDefinitions>
     			<Label Content="Avg" VerticalAlignment="Top" Background="{Binding Category.Color}"/>
     			<Label Content="{Binding Avg}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
-    			<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
+    			<Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"/>
     		</Grid>
-    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    		<Grid Height="300" Margin="5" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
     			<Grid.RowDefinitions>
     				<RowDefinition/>
     				<RowDefinition Height="3*"/>
     			</Grid.RowDefinitions>
                 <Label Content="Min" VerticalAlignment="Top" Background="{Binding Category.Color}"/>
     			<Label Content="{Binding Min}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
-    			<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
+    			<Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"/>
     		</Grid>
-    		<Grid Height="100" Margin="5,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left">
+    		<Grid Height="300" Margin="5" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
     			<Grid.RowDefinitions>
     				<RowDefinition/>
     				<RowDefinition Height="3*"/>
     			</Grid.RowDefinitions>
                 <Label Content="Max" VerticalAlignment="Top" Background="{Binding Category.Color}"/>
     			<Label Content="{Binding Max}" HorizontalAlignment="Right" Margin="5,0" VerticalAlignment="Center" Grid.Row="1" HorizontalContentAlignment="Right"/>
-    			<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
+    			<Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2"/>
     		</Grid>
     	</WrapPanel>
     </Grid>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrackerDemo.Data;
+using TrackerDemo.View;
 using TrackerDemo.ViewModel;
 
 namespace TrackerDemo

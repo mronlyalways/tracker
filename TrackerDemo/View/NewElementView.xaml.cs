@@ -13,23 +13,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TrackerDemo.Message;
+using TrackerDemo.Model;
+using TrackerDemo.ViewModel;
 
 namespace TrackerDemo.View
 {
     /// <summary>
     /// Interaction logic for NewCategoryView.xaml
     /// </summary>
-    public partial class NewElementView : Window
+    public partial class NewElementView : UserControl
     {
         public NewElementView()
         {
             InitializeComponent();
-            Messenger.Default.Register<CloseWindowMessage>(this, CloseWindow);
-        }
-
-        private void CloseWindow(CloseWindowMessage m)
-        {
-            this.Close();
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace TrackerDemo.Model
 {
-    public class Element
+    public class Element : ObservableObject
     {
         public Element() { }
 
@@ -12,8 +13,50 @@ namespace TrackerDemo.Model
             Date = date;
         }
 
-        public double Value { get; set; }
+        private double _value;
+        public double Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                RaisePropertyChanged(() => Value);
+            }
+        }
 
-        public DateTime Date { get; set; }
+        private DateTime date;
+        public DateTime Date
+        {
+            get
+            {
+                return date;
+            }
+            set
+            {
+                date = value;
+                RaisePropertyChanged(() => Date);
+            }
+        }
+
+        public bool Equals(Object obj)
+        {
+            if (obj != null && obj is Element)
+            {
+                var tmp = obj as Element;
+                return Value == tmp.Value && Date.Equals(tmp.Date);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int GetHashCode()
+        {
+            return (int) Value + Date.DayOfYear + Date.Year;
+        }
     }
 }

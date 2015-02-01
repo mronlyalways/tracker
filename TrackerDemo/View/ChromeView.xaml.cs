@@ -24,22 +24,6 @@ namespace TrackerDemo.View
         public ChromeView()
         {
             InitializeComponent();
-            Messenger.Default.Register<RequestNewCategoryMessage>(this, OnNewCategoryRequest);
-            Messenger.Default.Register<RequestNewElementMessage>(this, OnNewElementRequest);
-        }
-
-        private void OnNewCategoryRequest(RequestNewCategoryMessage m)
-        {
-            var v = new NewCategoryView();
-            v.Owner = this;
-            v.ShowDialog();
-        }
-
-        private void OnNewElementRequest(RequestNewElementMessage m)
-        {
-            var v = new NewElementView();
-            v.Owner = this;
-            v.ShowDialog();
-        }  
+        } 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System;
 using System.ComponentModel;
 using System.Text;
@@ -9,13 +10,48 @@ using TrackerDemo.Model;
 
 namespace TrackerDemo.ViewModel
 {
-    public class NewElementViewModel : ViewModelBase, IDataErrorInfo
+    public class NewElementViewModel : ViewModelBase, IInteractionRequestAware, IDataErrorInfo
     {
         public NewElementViewModel()
         {
             CreateNewElementCommand = new RelayCommand(CreateNewElement, IsValid);
             Value = String.Empty;
             Date = DateTime.Now;
+        }
+
+        public Action FinishInteraction { get; set; }
+
+        public INotification Notification
+        {
+            get
+            {
+                return TypedNotification;
+            }
+            set
+            {
+                if (value is ResultNotification<Element>)
+                {
+                    TypedNotification = value as ResultNotification<Element>;
+                }
+            }
+        }
+
+        private ResultNotification<Element> typedNotification;
+        public ResultNotification<Element> TypedNotification
+        {
+            get
+            {
+                return typedNotification;
+            }
+            set
+            {
+                typedNotification = value;
+                if (typedNotification.Result != null)
+                {
+                    Value = typedNotification.Result.Value.ToString();
+                    Date = typedNotification.Result.Date;
+                }
+            }
         }
 
         private string _value;
@@ -52,9 +88,14 @@ namespace TrackerDemo.ViewModel
 
         private void CreateNewElement()
         {
-            Messenger.Default.Send<NewElementMessage>(new NewElementMessage(new Element(Convert.ToDouble(Value), Date)));
-            Messenger.Default.Send<TrackerDemo.Message.NotificationMessage>(new TrackerDemo.Message.NotificationMessage("New element created", Message.NotificationMessage.NotificationType.Success));
-            Messenger.Default.Send<CloseWindowMessage>(new CloseWindowMessage());
+            if (TypedNotification.Result == null)
+            {
+                TypedNotification.Result = new Element();
+            }
+
+            TypedNotification.Result.Value = Convert.ToDouble(Value);
+            TypedNotification.Result.Date = Date;
+            FinishInteraction();
         }
 
         private bool IsValid()
