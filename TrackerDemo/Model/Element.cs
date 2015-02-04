@@ -41,7 +41,7 @@ namespace TrackerDemo.Model
             }
         }
 
-        public bool Equals(Object obj)
+        public override bool Equals(Object obj)
         {
             if (obj != null && obj is Element)
             {
@@ -54,7 +54,7 @@ namespace TrackerDemo.Model
             }
         }
 
-        public int GetHashCode()
+        public override int GetHashCode()
         {
             return (int) Value + Date.DayOfYear + Date.Year;
         }

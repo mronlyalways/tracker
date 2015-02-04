@@ -17,14 +17,14 @@ namespace TrackerDemo.ViewModel
 {
     public class CategoryViewModel : ViewModelBase
     {
-        private ResourceLocator locator;
         private ViewModelBase parent;
+        private ChromeViewModel chrome;
 
-        public CategoryViewModel(Category category, ViewModelBase parent)
+        public CategoryViewModel(Category category, ViewModelBase parent, ChromeViewModel chrome)
         {
             Category = category;
             this.parent = parent;
-            locator = (ResourceLocator)App.Current.Resources["Locator"];
+            this.chrome = chrome;
 
             Elements = new ObservableCollection<Element>(Category.Elements);
             OpenParentViewCommand = new RelayCommand(OpenParentView, () => true);
@@ -101,7 +101,7 @@ namespace TrackerDemo.ViewModel
 
         private void OpenParentView()
         {
-            locator.Chrome.Current = parent;
+            chrome.Current = parent;
         }
 
         private void RaiseNewElement()
@@ -115,6 +115,7 @@ namespace TrackerDemo.ViewModel
                     RaisePropertyChanged(() => Avg);
                     RaisePropertyChanged(() => Min);
                     RaisePropertyChanged(() => Max);
+                    Messenger.Default.Send<TrackerDemo.Message.NotificationMessage>(new TrackerDemo.Message.NotificationMessage("New element added", Message.NotificationMessage.NotificationType.Success));
                 });
         }
 

@@ -6,7 +6,9 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ia="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:v="clr-namespace:TrackerDemo.View"
-             mc:Ignorable="d" d:DataContext="{d:DesignData /SampleData/NotificationViewModelSampleData.xaml}"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignData /SampleData/NotificationViewModelSampleData.xaml}"
+             DataContext="{Binding Notification, Source={StaticResource Locator}}"
 			 FontSize="18">
     <UserControl.Resources>
         <v:NotificationTypeToSymbolConverter x:Key="NotificationTypeToSymbolConverter"/>
@@ -20,9 +22,6 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <UserControl.DataContext>
-    	<Binding Mode="OneWay" Path="Notification" Source="{StaticResource Locator}"/>
-    </UserControl.DataContext>
     <Border x:Name="NotificationArea" Opacity="0.0" Width="Auto" Height="Auto" BorderThickness="2" CornerRadius="0,0,5,5">
         <Border.BorderBrush>
             <SolidColorBrush Color="White" Opacity="0.65"/>

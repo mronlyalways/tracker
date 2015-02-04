@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Microsoft.Practices.ServiceLocation;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,30 +9,21 @@ using TrackerDemo.Data;
 using TrackerDemo.View;
 using TrackerDemo.ViewModel;
 
-namespace TrackerDemo
+namespace TrackerDemo.ViewModel
 {
-    class ResourceLocator : IDisposable
+    public class ViewModelLocator : IDisposable
     {
-        private IKernel kernel;
+        private static IKernel kernel;
 
-        public ResourceLocator()
+        static ViewModelLocator()
         {
             kernel = new StandardKernel();
-
-            // add ViewModels here:
+            kernel.Bind<IDataService>().To<DesignTimeDataService>().InSingletonScope();
+            kernel.Bind<NotificationViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<ChromeViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<HomeViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<NewCategoryViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<NewElementViewModel>().ToSelf().InSingletonScope();
-            kernel.Bind<NotificationViewModel>().ToSelf().InSingletonScope();
-
-            // add other things here:
-            kernel.Bind<IDataService>().To<TestDataService>().InSingletonScope();
-        }
-
-        public T GetInstance<T>()
-        {
-            return kernel.Get<T>();
         }
 
         public ChromeViewModel Chrome

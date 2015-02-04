@@ -8,14 +8,14 @@ using TrackerDemo.Model;
 
 namespace TrackerDemo.Data
 {
-    class TestDataService : IDataService
+    public class DesignTimeDataService : IDataService
     {
         private IList<Category> categories;
 
-        public TestDataService()
+        public DesignTimeDataService()
         {
             categories = new List<Category>();
-            var c1 = new Category("Weight", "kg", 0, new SolidColorBrush(Colors.AliceBlue));
+            var c1 = new Category("Weight", "kg", 0, new SolidColorBrush(Colors.Aquamarine));
             var c2 = new Category("Pushups", "reps", 0, new SolidColorBrush(Colors.LightSeaGreen));
             var e1 = new Element(78, DateTime.Now);
             var e2 = new Element(79, DateTime.Now);

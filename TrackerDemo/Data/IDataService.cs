@@ -7,7 +7,7 @@ using TrackerDemo.Model;
 
 namespace TrackerDemo.Data
 {
-    interface IDataService
+    public interface IDataService
     {
         IEnumerable<Category> Load();
 

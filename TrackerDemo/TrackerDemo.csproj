@@ -65,6 +65,9 @@
     <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
       <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocation.1.0.0\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -102,12 +105,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\IDataService.cs" />
-    <Compile Include="Data\TestDataService.cs" />
+    <Compile Include="Data\DesignTimeDataService.cs" />
     <Compile Include="Message\NotificationMessage.cs" />
     <Compile Include="Message\ResultNotification.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Element.cs" />
-    <Compile Include="ResourceLocator.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChromeViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />
@@ -208,6 +211,7 @@
     <Resource Include="Resources\img\left-arrow.png" />
   </ItemGroup>
   <ItemGroup>
+    <DesignData Include="SampleData\CategoryViewModelSampleData.xaml" />
     <DesignData Include="SampleData\NotificationViewModelSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

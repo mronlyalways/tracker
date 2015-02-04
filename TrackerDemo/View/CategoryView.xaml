@@ -9,22 +9,7 @@
              xmlns:m="clr-namespace:TrackerDemo.Model"
              xmlns:v="clr-namespace:TrackerDemo.View"
 			 FontSize="26"
-             mc:Ignorable="d">
-    <UserControl.Resources>
-        <DataTemplate DataType="{x:Type m:Element}">
-            <Grid Background="Gray">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Margin="5" Text="{Binding Value}" Foreground="White" />
-                <Button Grid.Column="1" Content="Edit" Command="{Binding ElementName=root, Path=DataContext.RaiseEditElementCommand}" />
-                <Button Grid.Column="2" Content="Delete" Command="{Binding ElementName=root, Path=DataContext.DeleteElementCommand}" />
-            </Grid>
-        </DataTemplate>
-    </UserControl.Resources>
-
+             mc:Ignorable="d" d:DataContext="{d:DesignData /SampleData/CategoryViewModelSampleData.xaml}">
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding NewElementRequest, Mode=OneWay}">
             <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
@@ -38,8 +23,8 @@
     <Grid x:Name="root" Background="White">
     	<Grid.RowDefinitions>
     		<RowDefinition Height="40"/>
-    		<RowDefinition/>
-    		<RowDefinition/>
+    		<RowDefinition Height="3*"/>
+    		<RowDefinition Height="2*"/>
     	</Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -48,12 +33,12 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Command="{Binding OpenParentViewCommand}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
-                <Image Height="20" Width="20" Source="/TrackerDemo;component/Resources/img/left-arrow.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <Image Source="/TrackerDemo;component/Resources/img/left-arrow.png" Stretch="Fill" Margin="5,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Button>
             <Label Content="{Binding Category.Name}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,0"/>
             <Button Content="New Element" Command="{Binding RaiseNewElementCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Column="2"/>
         </Grid>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Elements}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox Grid.Row="1" Margin="20" ItemsSource="{Binding Elements}" SelectedItem="{Binding Selected, Mode=OneWayToSource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="350">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
@@ -63,8 +48,22 @@
                     </Style.Triggers>
                 </Style>
             </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:Element}">
+                    <Grid Background="{Binding ElementName=root, Path=DataContext.Category.Color}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="10,5" Text="{Binding Value}" Foreground="White" />
+                        <Button Grid.Column="1" Content="Edit" Command="{Binding ElementName=root, Path=DataContext.RaiseEditElementCommand}" />
+                        <Button Grid.Column="2" Content="Delete" Command="{Binding ElementName=root, Path=DataContext.DeleteElementCommand}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
-        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Margin="0,0,0,5">
+        <WrapPanel Margin="15,0,15,15" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2">
     		<Grid Height="300" Margin="5" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
     			<Grid.RowDefinitions>
     				<RowDefinition/>

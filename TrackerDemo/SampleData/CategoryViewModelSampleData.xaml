@@ -1,0 +1,45 @@
+﻿<ViewModel:CategoryViewModel xmlns:ViewModel="clr-namespace:TrackerDemo.ViewModel" xmlns:Model="clr-namespace:TrackerDemo.Model" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight" Avg="558.21" Goal="544.38" IsInDesignMode="True" IsInDesignModeStatic="False" Max="805.4" Min="695.08">
+	<ViewModel:CategoryViewModel.Category>
+		<Model:Category Color="#FF3C44EC" Goal="127.98" Name="Aliquam nam" Unit="Curabitur integer quisque">
+			<Model:Category.Elements>
+				<Model:Element Date="02/03/2015 09:36:07" Value="423.42"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="901.14"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="490.66"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="103.95"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="599.07"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="771.76"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="913.57"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="657.8"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="847.52"/>
+				<Model:Element Date="02/03/2015 09:36:07" Value="968.53"/>
+			</Model:Category.Elements>
+		</Model:Category>
+	</ViewModel:CategoryViewModel.Category>
+	<ViewModel:CategoryViewModel.DeleteElementCommand>
+		<Command:RelayCommand/>
+	</ViewModel:CategoryViewModel.DeleteElementCommand>
+	<ViewModel:CategoryViewModel.Elements>
+		<Model:Element Date="02/03/2015 09:36:07" Value="329.73"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="250.49"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="581.74"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="699.47"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="668.61"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="898.65"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="113.46"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="220.93"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="467.72"/>
+		<Model:Element Date="02/03/2015 09:36:07" Value="717.38"/>
+	</ViewModel:CategoryViewModel.Elements>
+	<ViewModel:CategoryViewModel.OpenParentViewCommand>
+		<Command:RelayCommand/>
+	</ViewModel:CategoryViewModel.OpenParentViewCommand>
+	<ViewModel:CategoryViewModel.RaiseEditElementCommand>
+		<Command:RelayCommand/>
+	</ViewModel:CategoryViewModel.RaiseEditElementCommand>
+	<ViewModel:CategoryViewModel.RaiseNewElementCommand>
+		<Command:RelayCommand/>
+	</ViewModel:CategoryViewModel.RaiseNewElementCommand>
+	<ViewModel:CategoryViewModel.Selected>
+		<Model:Element Date="02/03/2015 09:36:07" Value="941.77"/>
+	</ViewModel:CategoryViewModel.Selected>
+</ViewModel:CategoryViewModel>

@@ -15,15 +15,15 @@ namespace TrackerDemo.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        private ResourceLocator locator;
         private IDataService data;
+        private ChromeViewModel chrome;
 
-        public HomeViewModel()
+        public HomeViewModel(IDataService data, ChromeViewModel chrome)
         {
-            locator = (ResourceLocator)App.Current.Resources["Locator"];
-            data = locator.GetInstance<IDataService>();
-
-            Categories = new ObservableCollection<CategoryViewModel>(data.Load().Select(x => new CategoryViewModel(x, this)));
+            this.data = data;
+            this.chrome = chrome;
+            chrome.Current = this;
+            Categories = new ObservableCollection<CategoryViewModel>(data.Load().Select(x => new CategoryViewModel(x, this, chrome)));
 
             OpenCategoryCommand = new RelayCommand(OpenCategory, () => true);
             RaiseNewCategoryCommand = new RelayCommand(RaiseNewCategory, () => true);
@@ -73,7 +73,7 @@ namespace TrackerDemo.ViewModel
 
         private void OpenCategory()
         {
-            locator.Chrome.Current = Selected;
+            chrome.Current = Selected;
         }
 
         private void RaiseNewCategory()
@@ -83,7 +83,7 @@ namespace TrackerDemo.ViewModel
                 returned =>
                 {
                     data.Persist(returned.Result);
-                    Categories.Add(new CategoryViewModel(returned.Result, this));
+                    Categories.Add(new CategoryViewModel(returned.Result, this, chrome));
                     Messenger.Default.Send<TrackerDemo.Message.NotificationMessage>(new TrackerDemo.Message.NotificationMessage("New category created", Message.NotificationMessage.NotificationType.Success));
                 });
         }
