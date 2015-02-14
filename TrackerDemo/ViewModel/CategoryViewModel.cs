@@ -27,10 +27,10 @@ namespace TrackerDemo.ViewModel
             this.chrome = chrome;
 
             Elements = new ObservableCollection<Element>(Category.Elements);
-            OpenParentViewCommand = new RelayCommand(OpenParentView, () => true);
-            RaiseNewElementCommand = new RelayCommand(RaiseNewElement, () => true);
-            RaiseEditElementCommand = new RelayCommand(RaiseEditElement, () => true);
-            DeleteElementCommand = new RelayCommand(DeleteElement, () => true);
+            OpenParentViewCommand = new RelayCommand(OpenParentView);
+            RaiseNewElementCommand = new RelayCommand(RaiseNewElement);
+            RaiseEditElementCommand = new RelayCommand(RaiseEditElement);
+            DeleteElementCommand = new RelayCommand(DeleteElement);
             NewElementRequest = new InteractionRequest<ResultNotification<Element>>();
         }
 

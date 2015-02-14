@@ -25,9 +25,9 @@ namespace TrackerDemo.ViewModel
             chrome.Current = this;
             Categories = new ObservableCollection<CategoryViewModel>(data.Load().Select(x => new CategoryViewModel(x, this, chrome)));
 
-            OpenCategoryCommand = new RelayCommand(OpenCategory, () => true);
-            RaiseNewCategoryCommand = new RelayCommand(RaiseNewCategory, () => true);
-            RaiseNewElementCommand = new RelayCommand(RaiseNewElement, () => true);
+            OpenCategoryCommand = new RelayCommand(OpenCategory);
+            RaiseNewCategoryCommand = new RelayCommand(RaiseNewCategory);
+            RaiseNewElementCommand = new RelayCommand(RaiseNewElement);
 
             NewCategoryRequest = new InteractionRequest<ResultNotification<Category>>();
             NewElementRequest = new InteractionRequest<ResultNotification<Element>>();

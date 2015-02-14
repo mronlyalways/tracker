@@ -199,15 +199,6 @@
     <Folder Include="SampleData\SampleDataSource\" />
   </ItemGroup>
   <ItemGroup>
-    <BlendEmbeddedFont Include="Fonts\seguisym.ttf">
-      <IsSystemFont>True</IsSystemFont>
-      <All>True</All>
-      <AutoFill>True</AutoFill>
-      <Uppercase>True</Uppercase>
-      <Lowercase>True</Lowercase>
-      <Numbers>True</Numbers>
-      <Punctuation>True</Punctuation>
-    </BlendEmbeddedFont>
     <Resource Include="Resources\img\left-arrow.png" />
   </ItemGroup>
   <ItemGroup>
